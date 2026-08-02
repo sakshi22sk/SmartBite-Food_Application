@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Track Orders | SmartBite AI</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<header>
+
+<nav>
+
+<div class="logo">
+
+<img src="{{ url_for('static', filename='images/logo.jfif') }}">
+
+<h2>
+
+SmartBite<span style="color:#F59E0B;">AI</span>
+
+</h2>
+
+</div>
+
+<ul>
+
+<li><a href="/">Home</a></li>
+
+<li><a href="/menu">Menu</a></li>
+
+<li><a href="/chatbot">AI</a></li>
+
+<li><a href="/orders">Orders</a></li>
+
+<li><a href="/locations">Locations</a></li>
+
+<li><a href="/cart">Cart</a></li>
+
+</ul>
+
+</nav>
+
+</header>
+
+
+
+<section>
+
+<div class="badge ready">
+
+📦 Live Order Tracking
+
+</div>
+
+<br>
+
+<h1 class="section-title">
+
+Your Orders
+
+</h1>
+
+<p class="section-subtitle">
+
+Track every order in real time.
+
+</p>
+
+</section>
+
+
+
+<section>
+
+{% for order in orders %}
+
+<div class="order-card">
+
+<div class="order-top">
+
+<div>
+
+<h2>
+
+Order #{{ order[0] }}
+
+</h2>
+
+<p>
+
+{{ order[1] }}
+
+</p>
+
+</div>
+
+<div>
+
+{% if order[7] == "Preparing" %}
+
+<span class="badge"
+style="background:#FEF3C7;color:#B45309;">
+
+🟡 Preparing
+
+</span>
+
+{% elif order[7] == "Ready" %}
+
+<span class="badge ready">
+
+🟢 Ready
+
+</span>
+
+{% elif order[7] == "Delivered" %}
+
+<span class="badge delivered">
+
+🟣 Delivered
+
+</span>
+
+{% else %}
+
+<span class="badge"
+
+style="background:#DBEAFE;color:#1D4ED8;">
+
+🔵 Placed
+
+</span>
+
+{% endif %}
+
+</div>
+
+</div>
+
+<br>
+
+<div class="progress">
+
+<div
+
+class="progress-fill"
+
+style="width:
+
+{% if order[7]=='Placed' %}
+
+25%
+
+{% elif order[7]=='Preparing' %}
+
+50%
+
+{% elif order[7]=='Ready' %}
+
+75%
+
+{% else %}
+
+100%
+
+{% endif %}
+
+">
+
+</div>
+
+</div>
+
+<div class="timeline">
+
+<div>
+
+<i class="fas fa-check-circle"></i>
+
+<p>
+
+Placed
+
+</p>
+
+</div>
+
+<div>
+
+<i class="fas fa-fire"></i>
+
+<p>
+
+Preparing
+
+</p>
+
+</div>
+
+<div>
+
+<i class="fas fa-box"></i>
+
+<p>
+
+Ready
+
+</p>
+
+</div>
+
+<div>
+
+<i class="fas fa-truck"></i>
+
+<p>
+
+Delivered
+
+</p>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="order-details">
+
+<div>
+
+<strong>
+
+Customer
+
+</strong>
+
+<br>
+
+{{ order[1] }}
+
+</div>
+
+<div>
+
+<strong>
+
+Type
+
+</strong>
+
+<br>
+
+{{ order[4] }}
+
+</div>
+
+<div>
+
+<strong>
+
+Slot
+
+</strong>
+
+<br>
+
+{{ order[5] }}
+
+</div>
+
+<div>
+
+<strong>
+
+Total
+
+</strong>
+
+<br>
+
+₹ {{ order[6] }}
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</section>
+<!-- ====================================== -->
+<!-- DELIVERY ACTIONS -->
+<!-- ====================================== -->
+
+<section>
+
+<center>
+
+<h1 class="section-title">
+
+Need Anything Else?
+
+</h1>
+
+<p class="section-subtitle">
+
+Track, rate or order again.
+
+</p>
+
+</center>
+
+<div class="categories">
+
+<div class="category">
+
+<i class="fas fa-map-location-dot fa-3x"
+style="color:#F59E0B;"></i>
+
+<br><br>
+
+<h3>
+
+Track Driver
+
+</h3>
+
+<p>
+
+View delivery location.
+
+</p>
+
+<button class="btn btn-primary">
+
+Open Map
+
+</button>
+
+</div>
+
+
+
+<div class="category">
+
+<i class="fas fa-file-invoice fa-3x"
+style="color:#F59E0B;"></i>
+
+<br><br>
+
+<h3>
+
+Download Invoice
+
+</h3>
+
+<p>
+
+Download PDF receipt.
+
+</p>
+
+<button class="btn btn-primary">
+
+Download
+
+</button>
+
+</div>
+
+
+
+<div class="category">
+
+<i class="fas fa-star fa-3x"
+style="color:#F59E0B;"></i>
+
+<br><br>
+
+<h3>
+
+Rate Order
+
+</h3>
+
+<p>
+
+Share your experience.
+
+</p>
+
+<button
+
+id="rateBtn"
+
+class="btn btn-primary">
+
+Rate
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ====================================== -->
+<!-- RATING MODAL -->
+<!-- ====================================== -->
+
+<div id="ratingModal" class="modal">
+
+<div class="modal-content">
+
+<h1>
+
+⭐ Rate Your Order
+
+</h1>
+
+<br>
+
+<div id="stars">
+
+<i class="far fa-star star"></i>
+
+<i class="far fa-star star"></i>
+
+<i class="far fa-star star"></i>
+
+<i class="far fa-star star"></i>
+
+<i class="far fa-star star"></i>
+
+</div>
+
+<br>
+
+<textarea
+
+placeholder="Write your review..."
+
+style="
+
+width:100%;
+
+height:120px;
+
+padding:15px;
+
+border-radius:15px;
+
+border:1px solid #ddd;
+
+resize:none;
+
+">
+
+</textarea>
+
+<br><br>
+
+<button
+
+class="btn btn-primary"
+
+onclick="closeRating()">
+
+Submit Review
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- ====================================== -->
+<!-- FOOTER -->
+<!-- ====================================== -->
+
+<footer>
+
+<div class="footer-grid">
+
+<div>
+
+<h2>
+
+🍽 SmartBite AI
+
+</h2>
+
+<p>
+
+AI Powered Food Ordering Platform.
+
+</p>
+
+</div>
+
+
+
+<div>
+
+<h3>
+
+Quick Links
+
+</h3>
+
+<a href="/">Home</a>
+
+<a href="/menu">Menu</a>
+
+<a href="/chatbot">AI</a>
+
+<a href="/cart">Cart</a>
+
+</div>
+
+
+
+<div>
+
+<h3>
+
+Support
+
+</h3>
+
+<a href="#">Help Center</a>
+
+<a href="#">Privacy Policy</a>
+
+<a href="#">Terms</a>
+
+</div>
+
+
+
+<div>
+
+<h3>
+
+Contact
+
+</h3>
+
+<p>
+
+support@smartbite.ai
+
+</p>
+
+<br>
+
+<i class="fab fa-facebook fa-2x"></i>
+
+&nbsp;
+
+<i class="fab fa-instagram fa-2x"></i>
+
+&nbsp;
+
+<i class="fab fa-linkedin fa-2x"></i>
+
+</div>
+
+</div>
+
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>

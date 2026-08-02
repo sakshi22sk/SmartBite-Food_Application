@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>SmartBite AI Assistant</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+
+<!-- ===================================== -->
+<!-- NAVBAR -->
+<!-- ===================================== -->
+
+<header>
+
+<nav>
+
+<div class="logo">
+
+<img src="{{ url_for('static', filename='images/logo.jfif') }}">
+
+<h2>
+
+SmartBite<span style="color:#F59E0B;">AI</span>
+
+</h2>
+
+</div>
+
+<ul>
+
+<li><a href="/">Home</a></li>
+
+<li><a href="/menu">Menu</a></li>
+
+<li><a href="/chatbot">AI Assistant</a></li>
+
+<li><a href="/orders">Orders</a></li>
+
+<li><a href="/locations">Locations</a></li>
+
+<li><a href="/cart">Cart</a></li>
+
+</ul>
+
+</nav>
+
+</header>
+
+
+
+<!-- ===================================== -->
+<!-- CHAT CONTAINER -->
+<!-- ===================================== -->
+
+<div class="chat-page">
+
+
+
+
+<!-- ===================== -->
+<!-- SIDEBAR -->
+<!-- ===================== -->
+
+<div class="chat-sidebar">
+
+<h2>
+
+🤖 AI Chef
+
+</h2>
+
+<p>
+
+Your personal food assistant.
+
+</p>
+
+<hr>
+
+<br>
+
+<h3>
+
+Quick Suggestions
+
+</h3>
+
+<div class="quick-chip">
+
+🍕 Recommend Pizza
+
+</div>
+
+<div class="quick-chip">
+
+🥗 Healthy Meal
+
+</div>
+
+<div class="quick-chip">
+
+🌶 Something Spicy
+
+</div>
+
+<div class="quick-chip">
+
+💰 Under ₹300
+
+</div>
+
+<div class="quick-chip">
+
+🍰 Dessert
+
+</div>
+
+<div class="quick-chip">
+
+🥤 Cold Drink
+
+</div>
+
+<br>
+
+<hr>
+
+<br>
+
+<h3>
+
+Popular Questions
+
+</h3>
+
+<ul class="question-list">
+
+<li>
+
+What should I eat today?
+
+</li>
+
+<li>
+
+Best dinner?
+
+</li>
+
+<li>
+
+High Protein Meal
+
+</li>
+
+<li>
+
+Suggest breakfast
+
+</li>
+
+<li>
+
+Family Combo
+
+</li>
+
+</ul>
+
+</div>
+
+
+
+
+<!-- ===================== -->
+<!-- CHAT -->
+<!-- ===================== -->
+
+<div class="chat-main">
+
+<div class="chat-header">
+
+<div>
+
+<h2>
+
+SmartBite AI Chef
+
+</h2>
+
+<p>
+
+Online • Ready to help 🍽
+
+</p>
+
+</div>
+
+<div>
+
+<i class="fas fa-robot fa-2x"
+style="color:#F59E0B;"></i>
+
+</div>
+
+</div>
+
+
+
+
+
+<div id="chatBox">
+
+
+
+<div class="bot-message">
+
+👋 Hello!
+
+I'm SmartBite AI Chef.
+
+Tell me
+
+✔ Your Budget
+
+✔ Veg / Non Veg
+
+✔ Healthy or Cheat Meal
+
+✔ Spicy or Mild
+
+and I'll recommend the best dishes.
+
+</div>
+
+
+
+
+
+
+<div class="suggestions">
+
+<button class="suggest-btn">
+
+🍛 Indian Food
+
+</button>
+
+<button class="suggest-btn">
+
+🍕 Pizza
+
+</button>
+
+<button class="suggest-btn">
+
+🥗 Healthy
+
+</button>
+
+<button class="suggest-btn">
+
+🌶 Spicy
+
+</button>
+
+<button class="suggest-btn">
+
+💰 ₹300
+
+</button>
+
+<button class="suggest-btn">
+
+🍔 Burger
+
+</button>
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+<!-- ===================== -->
+<!-- INPUT -->
+<!-- ===================== -->
+
+<div id="chatMessages" class="chat-messages"></div>
+
+<div class="chat-input">
+
+    <input
+        id="userInput"
+        placeholder="Ask SmartBite AI...">
+
+    <button id="sendBtn">
+        <i class="fas fa-paper-plane"></i>
+    </button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+document.getElementById("sendBtn").addEventListener("click", sendMessage);
+
+document.getElementById("userInput").addEventListener("keypress", function(e){
+
+    if(e.key==="Enter"){
+        sendMessage();
+    }
+
+});
+
+</script>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+<script>
+
+async function sendMessage(){
+
+    let input=document.getElementById("userInput");
+
+    let msg=input.value.trim();
+
+    if(msg==="") return;
+
+    let chat=document.getElementById("chatMessages");
+
+    chat.innerHTML+=`
+
+        <div class="user-message">
+
+            ${msg}
+
+        </div>
+
+    `;
+
+    input.value="";
+
+    const response=await fetch("/chat",{
+
+        method:"POST",
+
+        headers:{
+
+            "Content-Type":"application/json"
+
+        },
+
+        body:JSON.stringify({
+
+            message:msg
+
+        })
+
+    });
+
+    const data=await response.json();
+
+    chat.innerHTML+=`
+
+        <div class="bot-message">
+
+            ${data.reply}
+
+        </div>
+
+    `;
+
+    chat.scrollTop=chat.scrollHeight;
+
+}
+
+</script>
+</body>
+
+</html>

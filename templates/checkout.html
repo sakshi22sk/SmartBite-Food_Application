@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Checkout | SmartBite AI</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<header>
+
+<nav>
+
+<div class="logo">
+
+<img src="{{ url_for('static', filename='images/logo.jfif') }}">
+
+<h2>
+
+SmartBite<span style="color:#F59E0B;">AI</span>
+
+</h2>
+
+</div>
+
+<ul>
+
+<li><a href="/">Home</a></li>
+
+<li><a href="/menu">Menu</a></li>
+
+<li><a href="/chatbot">AI</a></li>
+
+<li><a href="/orders">Orders</a></li>
+<li><a href="/locations">Locations</a></li>
+
+</ul>
+
+</nav>
+
+</header>
+
+
+
+<section>
+
+<div class="badge ready">
+
+💳 Secure Checkout
+
+</div>
+
+<br>
+
+<h1 class="section-title">
+
+Complete Your Order
+
+</h1>
+
+<p class="section-subtitle">
+
+Fill your details to place the order.
+
+</p>
+
+</section>
+
+
+
+<div class="cart-layout">
+
+<div class="cart-items">
+
+<h2>Your Items</h2>
+
+<div id="checkoutItems"></div>
+
+</div>
+
+
+
+<div class="cart-summary">
+
+<h2>Checkout</h2>
+
+<hr><br>
+
+<input
+id="customerName"
+class="coupon"
+placeholder="Full Name">
+
+<br><br>
+
+<input
+id="phone"
+class="coupon"
+placeholder="Phone Number">
+
+<br><br>
+
+<textarea
+
+id="address"
+
+class="coupon"
+
+placeholder="Delivery Address"
+
+style="height:120px;resize:none;">
+
+</textarea>
+
+<br><br>
+
+<select
+
+id="orderType"
+
+class="coupon">
+
+<option value="Delivery">
+
+Delivery
+
+</option>
+
+<option value="Takeaway">
+
+Takeaway
+
+</option>
+
+</select>
+
+<br><br>
+
+<input
+
+id="timeSlot"
+
+class="coupon"
+
+placeholder="Preferred Time (Optional)">
+
+<br><br>
+
+<hr>
+
+<br>
+
+<div class="summary-row">
+
+<h3>
+
+Subtotal
+
+</h3>
+
+<h3 id="checkoutSubtotal">
+
+₹0
+
+</h3>
+
+</div>
+
+<div class="summary-row">
+
+<h3>
+
+GST (5%)
+
+</h3>
+
+<h3 id="checkoutGST">
+
+₹0
+
+</h3>
+
+</div>
+
+<div class="summary-row">
+
+<h3>
+
+Delivery
+
+</h3>
+
+<h3>
+
+₹40
+
+</h3>
+
+</div>
+
+<hr>
+
+<br>
+
+<div class="summary-row">
+
+<h2>
+
+Total
+
+</h2>
+
+<h2 id="checkoutTotal">
+
+₹40
+
+</h2>
+
+</div>
+
+<br>
+
+<button
+
+class="btn btn-primary"
+
+style="width:100%;"
+
+onclick="placeOrder()">
+
+Place Order
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+<script>
+
+function loadCheckout(){
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+    let html="";
+    let subtotal=0;
+
+    Object.values(cart).forEach(item=>{
+
+        subtotal += item.price * item.qty;
+
+        html += `
+
+        <div class="cart-card">
+
+            <img src="/static/images/${item.image}">
+
+            <div class="cart-details">
+
+                <h3>${item.name}</h3>
+
+                <h2>₹${item.price}</h2>
+
+                <p>Quantity : ${item.qty}</p>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+    document.getElementById("checkoutItems").innerHTML = html;
+
+    let gst = subtotal * 0.05;
+
+    let total = subtotal + gst + 40;
+
+    document.getElementById("checkoutSubtotal").innerHTML = "₹" + subtotal.toFixed(0);
+    document.getElementById("checkoutGST").innerHTML = "₹" + gst.toFixed(0);
+    document.getElementById("checkoutTotal").innerHTML = "₹" + total.toFixed(0);
+
+}
+
+loadCheckout();
+
+
+
+async function placeOrder(){
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+    if(Object.keys(cart).length==0){
+
+        alert("Cart is empty");
+
+        return;
+
+    }
+
+    let subtotal=0;
+
+    Object.values(cart).forEach(item=>{
+
+        subtotal += item.price * item.qty;
+
+    });
+
+    let total = subtotal + subtotal*0.05 + 40;
+
+    let body = {
+
+        customer_name:document.getElementById("customerName").value,
+
+        phone:document.getElementById("phone").value,
+
+        address:document.getElementById("address").value,
+
+        order_type:document.getElementById("orderType").value,
+
+        time_slot:document.getElementById("timeSlot").value,
+
+        total:total,
+
+        items:Object.values(cart)
+
+    };
+
+    const response = await fetch("/place_order",{
+
+        method:"POST",
+
+        headers:{
+
+            "Content-Type":"application/json"
+
+        },
+
+        body:JSON.stringify(body)
+
+    });
+
+    const result = await response.json();
+
+    if(result.success){
+
+        localStorage.removeItem("cart");
+
+        alert("Order Placed Successfully!");
+
+        window.location="/orders";
+
+    }
+
+    else{
+
+        alert(result.error);
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>

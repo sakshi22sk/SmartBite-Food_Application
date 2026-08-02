@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Cart | SmartBite AI</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<header>
+
+<nav>
+
+<div class="logo">
+
+<img src="{{ url_for('static', filename='images/logo.jfif') }}">
+
+<h2>
+
+SmartBite<span style="color:#F59E0B;">AI</span>
+
+</h2>
+
+</div>
+
+<ul>
+
+<li><a href="/">Home</a></li>
+
+<li><a href="/menu">Menu</a></li>
+
+<li><a href="/chatbot">AI</a></li>
+
+<li><a href="/orders">Orders</a></li>
+
+<li><a href="/locations">Locations</a></li>
+
+</ul>
+
+</nav>
+
+</header>
+
+<section>
+
+<div class="badge ready">
+
+🛒 Shopping Cart
+
+</div>
+
+<br>
+
+<h1 class="section-title">
+
+Review Your Order
+
+</h1>
+
+<p class="section-subtitle">
+
+Almost there! Confirm your delicious meal.
+
+</p>
+
+</section>
+
+<div class="cart-layout">
+
+<!-- ========================= -->
+<!-- DYNAMIC CART ITEMS -->
+<!-- ========================= -->
+
+<div class="cart-items" id="cartItems">
+
+<!-- Filled automatically by JavaScript -->
+
+</div>
+
+<!-- ========================= -->
+<!-- SUMMARY -->
+<!-- ========================= -->
+
+<div class="cart-summary">
+
+<h2>Order Summary</h2>
+
+<hr><br>
+
+<div class="summary-row">
+
+<span>Subtotal</span>
+
+<span id="subtotal">
+
+₹0
+
+</span>
+
+</div>
+
+<div class="summary-row">
+
+<span>GST (5%)</span>
+
+<span id="gst">
+
+₹0
+
+</span>
+
+</div>
+
+<div class="summary-row">
+
+<span>Delivery</span>
+
+<span>
+
+₹40
+
+</span>
+
+</div>
+
+<hr><br>
+
+<div class="summary-row">
+
+<h2>Total</h2>
+
+<h2 id="total">
+
+₹40
+
+</h2>
+
+</div>
+
+<br>
+
+<input
+type="text"
+placeholder="Coupon Code"
+class="coupon">
+
+<br><br>
+
+<button
+class="btn btn-secondary"
+style="width:100%;">
+
+Apply Coupon
+
+</button>
+
+<br><br>
+
+<a href="/checkout">
+
+<button
+class="btn btn-primary"
+style="width:100%;">
+
+Proceed to Checkout
+
+</button>
+
+</a>
+
+</div>
+
+</div>
+<!-- ===================================== -->
+<!-- RECOMMENDED -->
+<!-- ===================================== -->
+
+<section>
+
+<center>
+
+<div class="badge veg">
+
+⭐ Recommended For You
+
+</div>
+
+<br>
+
+<h1 class="section-title">
+
+People Also Ordered
+
+</h1>
+
+<p class="section-subtitle">
+
+Complete your meal with these favorites.
+
+</p>
+
+</center>
+
+<div class="food-grid">
+
+<div class="food-card">
+
+<img src="{{ url_for('static', filename='images/fries.jpg') }}">
+
+<div class="food-info">
+
+<h3>French Fries</h3>
+
+<p>Crispy golden fries.</p>
+
+<div class="price">
+
+<h2>₹99</h2>
+
+<button class="btn btn-primary"
+
+onclick="addToCart(7,'French Fries',99,'fries.jpg')">
+
+Add
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="food-card">
+
+<img src="{{ url_for('static', filename='images/choco-lava.jfif') }}">
+
+<div class="food-info">
+
+<h3>Chocolate Lava Cake</h3>
+
+<p>Hot chocolate dessert.</p>
+
+<div class="price">
+
+<h2>₹149</h2>
+
+<button class="btn btn-primary"
+
+onclick="addToCart(9,'Chocolate Lava Cake',149,'lava.jfif')">
+
+Add
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="food-card">
+
+<img src="{{ url_for('static', filename='images/garlic.jfif') }}">
+
+<div class="food-info">
+
+<h3>Garlic Bread</h3>
+
+<p>Cheesy garlic bread.</p>
+
+<div class="price">
+
+<h2>₹119</h2>
+
+<button class="btn btn-primary"
+
+onclick="addToCart(10,'Garlic Bread',119,'garlic.jfif')">
+
+Add
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="food-card">
+
+<img src="{{ url_for('static', filename='images/coffee.jfif') }}">
+
+<div class="food-info">
+
+<h3>Cold Coffee</h3>
+
+<p>Refreshing cold coffee.</p>
+
+<div class="price">
+
+<h2>₹129</h2>
+
+<button class="btn btn-primary"
+
+onclick="addToCart(8,'Cold Coffee',129,'coffee.jfif')">
+
+Add
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+<footer>
+
+<div class="footer-grid">
+
+<div>
+
+<h2>🍽 SmartBite AI</h2>
+
+<p>
+Food made smarter with AI.
+</p>
+
+</div>
+
+<div>
+
+<h3>Quick Links</h3>
+
+<a href="/">Home</a>
+<a href="/menu">Menu</a>
+<a href="/chatbot">AI</a>
+<a href="/orders">Orders</a>
+
+</div>
+
+<div>
+
+<h3>Support</h3>
+
+<a href="#">FAQs</a>
+<a href="#">Contact</a>
+<a href="#">Privacy Policy</a>
+
+</div>
+
+<div>
+
+<h3>Follow Us</h3>
+
+<i class="fab fa-facebook fa-2x"></i>
+<i class="fab fa-instagram fa-2x"></i>
+<i class="fab fa-linkedin fa-2x"></i>
+
+</div>
+
+</div>
+
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+<script>
+
+function renderCart(){
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+    let container = document.getElementById("cartItems");
+
+    container.innerHTML = "";
+
+    let subtotal = 0;
+
+    Object.values(cart).forEach(item=>{
+
+        subtotal += item.price * item.qty;
+
+        container.innerHTML += `
+
+<div class="cart-card">
+
+<img src="/static/images/${item.image}">
+
+<div class="cart-details">
+
+<h3>${item.name}</h3>
+
+<p>Quantity : ${item.qty}</p>
+
+<br>
+
+<h2>₹${item.price}</h2>
+
+</div>
+
+<div class="qty-box">
+
+<button class="qty-btn"
+
+onclick="cartMinus(${item.id})">
+
+-
+
+</button>
+
+<input
+
+type="text"
+
+readonly
+
+value="${item.qty}">
+
+<button class="qty-btn"
+
+onclick="cartPlus(${item.id})">
+
++
+
+</button>
+
+</div>
+
+<button
+
+class="delete-btn"
+
+onclick="removeCartItem(${item.id})">
+
+<i class="fas fa-trash"></i>
+
+</button>
+
+</div>
+
+`;
+
+    });
+
+    let gst = subtotal * 0.05;
+
+    let delivery = subtotal > 0 ? 40 : 0;
+
+    let total = subtotal + gst + delivery;
+
+    document.getElementById("subtotal").innerHTML =
+    "₹" + subtotal.toFixed(2);
+
+    document.getElementById("gst").innerHTML =
+    "₹" + gst.toFixed(2);
+
+    document.getElementById("total").innerHTML =
+    "₹" + total.toFixed(2);
+
+}
+
+function cartPlus(id){
+
+    increaseQty(id);
+
+    renderCart();
+
+}
+
+function cartMinus(id){
+
+    decreaseQty(id);
+
+    renderCart();
+
+}
+
+function removeCartItem(id){
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+    delete cart[id];
+
+    localStorage.setItem(
+
+        "cart",
+
+        JSON.stringify(cart)
+
+    );
+
+    updateCartCount();
+
+    renderCart();
+
+}
+
+window.onload = function(){
+
+    updateCartCount();
+
+    renderCart();
+
+};
+
+</script>
+
+</body>
+
+</html>

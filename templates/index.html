@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SmartBite AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+
+<!-- ===================================== -->
+<!-- NAVBAR -->
+<!-- ===================================== -->
+
+<header>
+
+<nav>
+
+<div class="logo">
+
+<img src="{{ url_for('static', filename='images/logo.jfif') }}">
+
+<h2>SmartBite<span style="color:#f59e0b;">AI</span></h2>
+
+</div>
+
+
+<ul>
+
+<li><a href="/">Home</a></li>
+
+<li><a href="/menu">Menu</a></li>
+
+<li><a href="/chatbot">AI Assistant</a></li>
+
+<li><a href="/orders">Orders</a></li>
+
+<li><a href="/locations">Locations</a></li>
+
+<li><a href="/admin">Admin</a></li>
+
+</ul>
+
+
+<a href="/cart">
+
+<div class="cart-icon">
+
+<i class="fa-solid fa-cart-shopping"></i>
+
+</div>
+
+</a>
+
+</nav>
+
+</header>
+
+
+<!-- ===================================== -->
+<!-- HERO -->
+<!-- ===================================== -->
+
+
+<section class="hero">
+
+
+<div>
+
+
+<div class="badge veg">
+
+✨ Powered by Gemini AI
+
+</div>
+
+<br><br>
+
+<h1>
+
+Order Food
+
+<br>
+
+<span>Smarter</span>
+
+with AI.
+
+</h1>
+
+
+<p>
+
+Tell SmartBite your cravings,
+
+budget,
+
+mood,
+
+or dietary preference.
+
+Our AI instantly recommends
+
+the perfect meal for you.
+
+</p>
+
+
+<div class="hero-buttons">
+
+<a href="/menu">
+
+<button class="btn btn-primary">
+
+Explore Menu
+
+</button>
+
+</a>
+
+
+<a href="/chatbot">
+
+<button class="btn btn-secondary">
+
+Ask AI
+
+</button>
+
+</a>
+
+</div>
+
+
+<br><br>
+
+
+<div style="display:flex;gap:50px;">
+
+
+<div>
+
+<h2>40K+</h2>
+
+<p>Orders</p>
+
+</div>
+
+
+<div>
+
+<h2>4.9★</h2>
+
+<p>Ratings</p>
+
+</div>
+
+
+<div>
+
+<h2>18 min</h2>
+
+<p>Delivery</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<div class="hero-image">
+
+<img src="{{ url_for('static', filename='images/logo2.avif') }}">
+
+
+<div style="
+
+position:absolute;
+
+bottom:25px;
+
+right:25px;
+
+background:white;
+
+padding:18px;
+
+border-radius:20px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.15);
+
+">
+
+<h2 style="color:#f59e0b;">
+
+₹249
+
+</h2>
+
+<p>
+
+Today's AI Pick
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ===================================== -->
+<!-- POPULAR CATEGORIES -->
+<!-- ===================================== -->
+
+<section>
+
+<div class="badge nonveg">
+
+Browse
+
+</div>
+
+<br>
+
+<h1 class="section-title">
+
+Popular Categories
+
+</h1>
+
+<p class="section-subtitle">
+
+Find your favorite cuisine instantly.
+
+</p>
+
+
+<div class="categories">
+
+
+<div class="category">
+
+<img src="{{ url_for('static', filename='images/pizza.avif') }}">
+
+<h3>Pizza</h3>
+
+</div>
+
+
+<div class="category">
+
+<img src="{{ url_for('static', filename='images/veg-biryani.jfif') }}">
+
+<h3>Biryani</h3>
+
+</div>
+
+
+<div class="category">
+
+<img src="{{ url_for('static', filename='images/dosa.jpg') }}">
+
+<h3>South Indian</h3>
+
+</div>
+
+
+<div class="category">
+
+<img src="{{ url_for('static', filename='images/buger.jpg') }}">
+
+<h3>Burger</h3>
+
+</div>
+
+
+<div class="category">
+
+<img src="{{ url_for('static', filename='images/samosa.jpg') }}">
+
+<h3>Snacks</h3>
+
+</div>
+
+
+<div class="category">
+
+<img src="{{ url_for('static', filename='images/bev.jfif') }}">
+
+<h3>Beverages</h3>
+
+</div>
+
+</div>
+
+</section>
+<!-- ===================================== -->
+<!-- TODAY'S SPECIAL -->
+<!-- ===================================== -->
+
+<section>
+
+    <div class="badge ready">
+        🔥 Chef's Recommendation
+    </div>
+
+    <br>
+
+    <h1 class="section-title">
+        Today's Special
+    </h1>
+
+    <p class="section-subtitle">
+        Freshly prepared dishes loved by our customers.
+    </p>
+
+    <div class="food-grid">
+
+        {% for food in foods %}
+
+        <div class="food-card">
+
+            <img src="{{ url_for('static', filename='images/' + food[6]) }}">
+
+            <div class="food-info">
+
+                {% if food[7] %}
+
+                <span class="badge veg">
+                    🟢 Veg
+                </span>
+
+                {% else %}
+
+                <span class="badge nonveg">
+                    🔴 Non Veg
+                </span>
+
+                {% endif %}
+
+                <br><br>
+
+                <h3>{{ food[1] }}</h3>
+
+                <p>
+
+                    {{ food[2] }}
+
+                </p>
+
+                <br>
+
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+
+                    <small>
+
+                        ⭐ {{ food[5] }}
+
+                    </small>
+
+                    <small>
+
+                        ⏱ {{ food[9] }} mins
+
+                    </small>
+
+                </div>
+
+                <div class="price">
+
+                    <h2>
+
+                        ₹ {{ food[4] }}
+
+                    </h2>
+
+                    {% if food[8] %}
+
+                    <button class="btn btn-primary">
+
+                        Add
+
+                    </button>
+
+                    {% else %}
+
+                    <button class="btn btn-secondary">
+
+                        Unavailable
+
+                    </button>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- ===================================== -->
+<!-- WHY CHOOSE US -->
+<!-- ===================================== -->
+
+<section>
+
+    <center>
+
+        <div class="badge veg">
+
+            Why SmartBite?
+
+        </div>
+
+        <br>
+
+        <h1 class="section-title">
+
+            More Than Just Food
+
+        </h1>
+
+        <p class="section-subtitle">
+
+            Fast. Smart. Delicious.
+
+        </p>
+
+    </center>
+
+
+    <div class="categories">
+
+        <div class="category">
+
+            <i class="fa-solid fa-robot fa-3x"
+               style="color:#f59e0b;"></i>
+
+            <br><br>
+
+            <h3>
+
+                AI Recommendation
+
+            </h3>
+
+            <br>
+
+            <p>
+
+                Personalized meal suggestions using Gemini AI.
+
+            </p>
+
+        </div>
+
+
+        <div class="category">
+
+            <i class="fa-solid fa-clock fa-3x"
+               style="color:#f59e0b;"></i>
+
+            <br><br>
+
+            <h3>
+
+                Ready Time
+
+            </h3>
+
+            <br>
+
+            <p>
+
+                Live preparation time before placing your order.
+
+            </p>
+
+        </div>
+
+
+        <div class="category">
+
+            <i class="fa-solid fa-truck-fast fa-3x"
+               style="color:#f59e0b;"></i>
+
+            <br><br>
+
+            <h3>
+
+                Fast Delivery
+
+            </h3>
+
+            <br>
+
+            <p>
+
+                Track every stage of your food in real time.
+
+            </p>
+
+        </div>
+
+
+        <div class="category">
+
+            <i class="fa-solid fa-location-dot fa-3x"
+               style="color:#f59e0b;"></i>
+
+            <br><br>
+
+            <h3>
+
+                Multiple Branches
+
+            </h3>
+
+            <br>
+
+            <p>
+
+                Order from your nearest SmartBite franchise.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ===================================== -->
+<!-- AI BANNER -->
+<!-- ===================================== -->
+
+<section>
+
+<div class="ai-box">
+
+<div>
+
+<div class="badge nonveg">
+
+🤖 AI Powered
+
+</div>
+
+<br>
+
+<h1 style="font-size:52px;">
+
+Confused
+
+about
+
+what to eat?
+
+</h1>
+
+<br>
+
+<p style="font-size:20px;line-height:34px;">
+
+Our AI Chef understands
+
+your cravings,
+
+budget,
+
+health goals,
+
+and favorite cuisines
+
+to recommend the perfect meal.
+
+</p>
+
+<br><br>
+
+<a href="/chatbot">
+
+<button class="btn btn-primary">
+
+Talk to AI Chef
+
+</button>
+
+</a>
+
+</div>
+
+
+<div>
+
+<div class="ai-chat">
+
+<div class="chat-message user">
+
+I have ₹300.
+
+Recommend dinner.
+
+</div>
+
+
+<div class="chat-message bot">
+
+🍛 Chicken Biryani
+
+🥤 Cold Coffee
+
+🍨 Chocolate Lava Cake
+
+Total ₹289
+
+</div>
+
+
+<div class="chat-message user">
+
+Something healthy?
+
+</div>
+
+
+<div class="chat-message bot">
+
+🥗 Paneer Salad
+
+🥛 Fresh Juice
+
+🍲 Veg Soup
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+<!-- ===================================== -->
+<!-- TESTIMONIALS -->
+<!-- ===================================== -->
+
+<section>
+
+<center>
+
+<div class="badge ready">
+❤️ Loved By Customers
+</div>
+
+<br>
+
+<h1 class="section-title">
+
+What Our Customers Say
+
+</h1>
+
+<p class="section-subtitle">
+
+Thousands of happy food lovers across India.
+
+</p>
+
+</center>
+
+
+<div class="food-grid">
+
+
+<div class="food-card">
+
+<div class="food-info">
+
+<div style="display:flex;align-items:center;gap:15px;">
+
+<img src="{{ url_for('static', filename='images/user1.jpg') }}"
+style="width:70px;height:70px;border-radius:50%;object-fit:cover;">
+
+<div>
+
+<h3>Rahul Sharma</h3>
+
+⭐ ⭐ ⭐ ⭐ ⭐
+
+</div>
+
+</div>
+
+<br>
+
+<p>
+
+"The AI recommendation was surprisingly accurate.
+Food arrived hot and fresh within 18 minutes."
+
+</p>
+
+</div>
+
+</div>
+
+
+
+<div class="food-card">
+
+<div class="food-info">
+
+<div style="display:flex;align-items:center;gap:15px;">
+
+<img src="{{ url_for('static', filename='images/user3.png') }}"
+style="width:70px;height:70px;border-radius:50%;object-fit:cover;">
+
+<div>
+
+<h3>Priya Mehta</h3>
+
+⭐ ⭐ ⭐ ⭐ ⭐
+
+</div>
+
+</div>
+
+<br>
+
+<p>
+
+"I absolutely loved the interface.
+Ordering food has never been this smooth."
+
+</p>
+
+</div>
+
+</div>
+
+
+
+<div class="food-card">
+
+<div class="food-info">
+
+<div style="display:flex;align-items:center;gap:15px;">
+
+<img src="{{ url_for('static', filename='images/user2.png') }}"
+style="width:70px;height:70px;border-radius:50%;object-fit:cover;">
+
+<div>
+
+<h3>Aman Singh</h3>
+
+⭐ ⭐ ⭐ ⭐ ⭐
+
+</div>
+
+</div>
+
+<br>
+
+<p>
+
+"The delivery tracker and AI chef make this app
+feel premium."
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ===================================== -->
+<!-- DOWNLOAD APP -->
+<!-- ===================================== -->
+
+<section>
+
+<div class="ai-box">
+
+<div>
+
+<div class="badge veg">
+
+📱 Mobile App
+
+</div>
+
+<br>
+
+<h1 style="font-size:52px;">
+
+Take SmartBite
+
+Everywhere.
+
+</h1>
+
+<br>
+
+<p style="font-size:20px;line-height:34px;">
+
+Order faster,
+
+track deliveries,
+
+chat with AI,
+
+and receive exclusive offers
+
+using our mobile app.
+
+</p>
+
+<br><br>
+
+<button class="btn btn-primary">
+
+Download Android
+
+</button>
+
+&nbsp;
+
+<button class="btn btn-secondary">
+
+Download iOS
+
+</button>
+
+</div>
+
+
+<div>
+
+<img src="{{ url_for('static', filename='images/ki.jpg') }}"
+
+style="width:100%;
+border-radius:30px;">
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ===================================== -->
+<!-- NEWSLETTER -->
+<!-- ===================================== -->
+
+<section>
+
+<center>
+
+<div class="badge nonveg">
+
+Stay Updated
+
+</div>
+
+<br>
+
+<h1 class="section-title">
+
+Get Offers Straight To Your Inbox
+
+</h1>
+
+<p class="section-subtitle">
+
+Receive discounts,
+
+new dishes,
+
+and exclusive AI meal recommendations.
+
+</p>
+
+<br>
+
+<div style="display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;">
+
+<input
+
+type="email"
+
+placeholder="Enter your email"
+
+style="
+
+padding:18px;
+
+width:420px;
+
+border-radius:50px;
+
+border:1px solid #ddd;
+
+font-size:17px;
+
+">
+
+<button class="btn btn-primary">
+
+Subscribe
+
+</button>
+
+</div>
+
+</center>
+
+</section>
+
+
+
+<!-- ===================================== -->
+<!-- FOOTER -->
+<!-- ===================================== -->
+
+<footer>
+
+<div class="footer-grid">
+
+
+<div>
+
+<h2>
+
+🍽 SmartBite AI
+
+</h2>
+
+<br>
+
+<p>
+
+Your intelligent food ordering platform powered by AI.
+
+Fast.
+
+Fresh.
+
+Delicious.
+
+</p>
+
+</div>
+
+
+
+<div>
+
+<h3>
+
+Quick Links
+
+</h3>
+
+<br>
+
+<a href="/">Home</a>
+
+<a href="/menu">Menu</a>
+
+<a href="/chatbot">AI Assistant</a>
+
+<a href="/orders">Orders</a>
+
+<a href="/locations">Locations</a>
+
+</div>
+
+
+
+<div>
+
+<h3>
+
+Support
+
+</h3>
+
+<br>
+
+<a href="#">Help Center</a>
+
+<a href="#">FAQs</a>
+
+<a href="#">Privacy Policy</a>
+
+<a href="#">Terms & Conditions</a>
+
+</div>
+
+
+
+<div>
+
+<h3>
+
+Contact
+
+</h3>
+
+<br>
+
+<p>
+
+📍 Chandigarh
+
+</p>
+
+<br>
+
+<p>
+
+📞 +91 9876543210
+
+</p>
+
+<br>
+
+<p>
+
+✉ support@smartbite.ai
+
+</p>
+
+<br>
+
+<div style="display:flex;gap:20px;font-size:25px;">
+
+<i class="fab fa-facebook"></i>
+
+<i class="fab fa-instagram"></i>
+
+<i class="fab fa-x-twitter"></i>
+
+<i class="fab fa-linkedin"></i>
+
+</div>
+
+</div>
+
+</div>
+
+<br><br>
+
+<hr>
+
+<br>
+
+<center>
+
+<p>
+
+© 2026 SmartBite AI • All Rights Reserved
+
+</p>
+
+</center>
+
+</footer>
+
+
+
+<!-- ===================================== -->
+<!-- SCROLL BUTTON -->
+<!-- ===================================== -->
+
+<button
+
+id="topBtn"
+
+style="
+
+position:fixed;
+
+bottom:35px;
+
+right:35px;
+
+width:60px;
+
+height:60px;
+
+border:none;
+
+border-radius:50%;
+
+background:#f59e0b;
+
+color:white;
+
+font-size:22px;
+
+cursor:pointer;
+
+display:none;
+
+box-shadow:0 10px 25px rgba(0,0,0,.2);
+
+">
+
+<i class="fas fa-arrow-up"></i>
+
+</button>
+
+
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>

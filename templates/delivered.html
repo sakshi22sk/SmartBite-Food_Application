@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Delivered | SmartBite AI</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<header>
+
+<nav>
+
+<div class="logo">
+
+<img src="{{ url_for('static', filename='images/logo.jfif') }}">
+
+<h2>
+
+SmartBite<span style="color:#F59E0B;">AI</span>
+
+</h2>
+
+</div>
+
+<ul>
+
+<li><a href="/">Home</a></li>
+
+<li><a href="/menu">Menu</a></li>
+
+<li><a href="/chatbot">AI</a></li>
+
+<li><a href="/orders">Orders</a></li>
+
+<li><a href="/locations">Locations</a></li>
+
+<li><a href="/cart">Cart</a></li>
+
+</ul>
+
+</nav>
+
+</header>
+
+
+
+<section>
+
+<center>
+
+<div class="success-circle">
+
+<i class="fas fa-circle-check"></i>
+
+</div>
+
+<br>
+
+<h1 class="section-title">
+
+Enjoy Your Meal! 🎉
+
+</h1>
+
+<p class="section-subtitle">
+
+Your order has been successfully delivered.
+
+Thank you for choosing SmartBite AI.
+
+</p>
+
+<br>
+
+<a href="/menu">
+
+<button class="btn btn-primary">
+
+Order Again
+
+</button>
+
+</a>
+
+</center>
+
+</section>
+
+
+
+<section>
+
+<center>
+
+<div class="badge delivered">
+
+✨ AI Recommendations
+
+</div>
+
+<br>
+
+<h1 class="section-title">
+
+Complete Your Meal
+
+</h1>
+
+<p class="section-subtitle">
+
+Customers who ordered this also enjoyed...
+
+</p>
+
+</center>
+
+<div class="food-grid">
+
+{% for food in addons %}
+
+<div class="food-card">
+
+<img src="{{ url_for('static',
+filename='images/' + food[6]) }}">
+
+<div class="food-info">
+
+<h3>
+
+{{ food[1] }}
+
+</h3>
+
+<p>
+
+{{ food[2] }}
+
+</p>
+
+<div class="price">
+
+<h2>
+
+₹ {{ food[4] }}
+
+</h2>
+
+<button class="btn btn-primary">
+
+Add
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</section>
+
+
+
+<section>
+
+<div class="ai-box">
+
+<div>
+
+<h1>
+
+Want Another Recommendation?
+
+</h1>
+
+<br>
+
+<p>
+
+Ask SmartBite AI for a dessert,
+
+drink,
+
+healthy option,
+
+or tomorrow's lunch.
+
+</p>
+
+<br>
+
+<a href="/chatbot">
+
+<button class="btn btn-primary">
+
+Ask AI
+
+</button>
+
+</a>
+
+</div>
+
+<div>
+
+<img
+
+src="{{ url_for('static',
+filename='images/logo.jfif') }}"
+
+style="width:100%;border-radius:25px;">
+
+</div>
+
+</div>
+
+</section>
+<!-- ========================================= -->
+<!-- DISCOUNT CARD -->
+<!-- ========================================= -->
+
+<section>
+
+<div class="discount-box">
+
+<div>
+
+<h1>
+
+🎁 Thank You!
+
+</h1>
+
+<br>
+
+<h2>
+
+Here's a gift for your next order.
+
+</h2>
+
+<br>
+
+<div class="coupon-code">
+
+SMART20
+
+</div>
+
+<br>
+
+<p>
+
+Use this coupon to get
+
+<b>20% OFF</b>
+
+on your next purchase.
+
+</p>
+
+</div>
+
+<div>
+
+<i class="fas fa-gift gift-icon"></i>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ========================================= -->
+<!-- ACTION BUTTONS -->
+<!-- ========================================= -->
+
+<section>
+
+<div class="categories">
+
+<div class="category">
+
+<i class="fas fa-rotate-right fa-3x"
+style="color:#F59E0B;"></i>
+
+<br><br>
+
+<h3>
+
+Reorder
+
+</h3>
+
+<br>
+
+<button class="btn btn-primary">
+
+Order Again
+
+</button>
+
+</div>
+
+
+
+
+<div class="category">
+
+<i class="fas fa-file-pdf fa-3x"
+style="color:#EF4444;"></i>
+
+<br><br>
+
+<h3>
+
+Invoice
+
+</h3>
+
+<br>
+
+<button class="btn btn-primary">
+
+Download
+
+</button>
+
+</div>
+
+
+
+
+<div class="category">
+
+<i class="fas fa-star fa-3x"
+style="color:#F59E0B;"></i>
+
+<br><br>
+
+<h3>
+
+Rate Food
+
+</h3>
+
+<br>
+
+<button
+
+id="rateFood"
+
+class="btn btn-primary">
+
+Rate
+
+</button>
+
+</div>
+
+
+
+
+<div class="category">
+
+<i class="fas fa-share-nodes fa-3x"
+style="color:#2563EB;"></i>
+
+<br><br>
+
+<h3>
+
+Share
+
+</h3>
+
+<br>
+
+<button class="btn btn-primary">
+
+Share
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ========================================= -->
+<!-- RATING MODAL -->
+<!-- ========================================= -->
+
+<div id="ratingModal"
+
+class="modal">
+
+<div class="modal-content">
+
+<h1>
+
+⭐⭐⭐⭐⭐
+
+</h1>
+
+<br>
+
+<h2>
+
+How was your meal?
+
+</h2>
+
+<br>
+
+<textarea
+
+placeholder="Tell us your experience..."
+
+style="
+
+width:100%;
+
+height:140px;
+
+padding:15px;
+
+border-radius:15px;
+
+border:1px solid #ddd;
+
+resize:none;
+
+">
+
+</textarea>
+
+<br><br>
+
+<button
+
+class="btn btn-primary"
+
+onclick="closeDeliveredRating()">
+
+Submit
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<footer>
+
+<div class="footer-grid">
+
+<div>
+
+<h2>
+
+🍽 SmartBite AI
+
+</h2>
+
+<p>
+
+Fresh Food.
+
+Fast Delivery.
+
+AI Powered.
+
+</p>
+
+</div>
+
+
+
+<div>
+
+<h3>
+
+Explore
+
+</h3>
+
+<a href="/">Home</a>
+
+<a href="/menu">Menu</a>
+
+<a href="/chatbot">AI</a>
+
+<a href="/locations">Locations</a>
+
+</div>
+
+
+
+<div>
+
+<h3>
+
+Support
+
+</h3>
+
+<a href="#">Contact</a>
+
+<a href="#">Privacy</a>
+
+<a href="#">Terms</a>
+
+</div>
+
+
+
+<div>
+
+<h3>
+
+Follow
+
+</h3>
+
+<i class="fab fa-facebook fa-2x"></i>
+
+&nbsp;
+
+<i class="fab fa-instagram fa-2x"></i>
+
+&nbsp;
+
+<i class="fab fa-linkedin fa-2x"></i>
+
+</div>
+
+</div>
+
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>

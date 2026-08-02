@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>SmartBite Admin Dashboard</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+<!-- ================================= -->
+<!-- SIDEBAR -->
+<!-- ================================= -->
+
+<div class="sidebar">
+
+<div class="admin-logo">
+
+🍽 SmartBite AI
+
+</div>
+
+<ul>
+
+<li class="active">
+
+<i class="fas fa-chart-pie"></i>
+
+Dashboard
+
+</li>
+
+<li>
+
+<i class="fas fa-box"></i>
+
+Orders
+
+</li>
+
+<li>
+
+<i class="fas fa-utensils"></i>
+
+Foods
+
+</li>
+
+<li>
+
+<i class="fas fa-users"></i>
+
+Customers
+
+</li>
+
+<li>
+
+<i class="fas fa-comments"></i>
+
+AI Chats
+
+</li>
+
+<li>
+
+<i class="fas fa-chart-line"></i>
+
+Analytics
+
+</li>
+
+<li>
+
+<i class="fas fa-gear"></i>
+
+Settings
+
+</li>
+
+</ul>
+
+</div>
+
+<!-- ================================= -->
+<!-- MAIN -->
+<!-- ================================= -->
+
+<div class="admin-main">
+
+<div class="topbar">
+
+<h1>
+
+Dashboard
+
+</h1>
+
+<div>
+
+<input
+
+type="text"
+
+placeholder="Search..."
+
+class="admin-search">
+
+</div>
+
+</div>
+
+<!-- ================================= -->
+<!-- CARDS -->
+<!-- ================================= -->
+
+<div class="dashboard-cards">
+
+<div class="dashboard-card">
+
+<i class="fas fa-box"></i>
+
+<h2>
+
+{{ orders|length }}
+
+</h2>
+
+<p>
+
+Total Orders
+
+</p>
+
+</div>
+
+<div class="dashboard-card">
+
+<i class="fas fa-indian-rupee-sign"></i>
+
+<h2>
+
+₹82,450
+
+</h2>
+
+<p>
+
+Revenue
+
+</p>
+
+</div>
+
+<div class="dashboard-card">
+
+<i class="fas fa-users"></i>
+
+<h2>
+
+1,245
+
+</h2>
+
+<p>
+
+Customers
+
+</p>
+
+</div>
+
+<div class="dashboard-card">
+
+<i class="fas fa-clock"></i>
+
+<h2>
+
+16
+
+</h2>
+
+<p>
+
+Pending
+
+</p>
+
+</div>
+
+</div>
+
+<!-- ================================= -->
+<!-- RECENT ACTIVITY -->
+<!-- ================================= -->
+
+<div class="recent-card">
+
+<h2>
+
+Recent Activity
+
+</h2>
+
+<br>
+
+<div class="activity">
+
+<div>
+
+🛒 New Order #1005
+
+</div>
+
+<div>
+
+2 mins ago
+
+</div>
+
+</div>
+
+<div class="activity">
+
+<div>
+
+🤖 AI Recommendation Used
+
+</div>
+
+<div>
+
+5 mins ago
+
+</div>
+
+</div>
+
+<div class="activity">
+
+<div>
+
+🍔 Burger Added
+
+</div>
+
+<div>
+
+12 mins ago
+
+</div>
+
+</div>
+
+<div class="activity">
+
+<div>
+
+⭐ New 5-Star Review
+
+</div>
+
+<div>
+
+18 mins ago
+
+</div>
+
+</div>
+
+</div>
+<!-- ================================= -->
+<!-- ORDER MANAGEMENT -->
+<!-- ================================= -->
+
+<div class="recent-card" style="margin-top:35px;">
+
+<div style="display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;">
+
+<h2>
+
+📦 Order Management
+
+</h2>
+
+<input
+
+type="text"
+
+id="orderSearch"
+
+class="admin-search"
+
+placeholder="Search Customer...">
+
+</div>
+
+
+<table class="admin-table">
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Customer</th>
+
+<th>Phone</th>
+
+<th>Type</th>
+
+<th>Slot</th>
+
+<th>Total</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="orderTable">
+
+{% for order in orders %}
+
+<tr>
+
+<td>
+
+#{{ order[0] }}
+
+</td>
+
+<td>
+
+{{ order[1] }}
+
+</td>
+
+<td>
+
+{{ order[2] }}
+
+</td>
+
+<td>
+
+{{ order[4] }}
+
+</td>
+
+<td>
+
+{{ order[5] }}
+
+</td>
+
+<td>
+
+₹ {{ order[6] }}
+
+</td>
+
+<td>
+
+<select
+class="status-select"
+
+data-id="{{ order[0] }}">
+
+<option
+{% if order[7]=='Placed' %}selected{% endif %}>
+
+Placed
+
+</option>
+
+<option
+{% if order[7]=='Preparing' %}selected{% endif %}>
+
+Preparing
+
+</option>
+
+<option
+{% if order[7]=='Ready' %}selected{% endif %}>
+
+Ready
+
+</option>
+
+<option
+{% if order[7]=='Delivered' %}selected{% endif %}>
+
+Delivered
+
+</option>
+
+</select>
+
+</td>
+
+<td>
+
+<button
+class="view-btn">
+
+<i class="fas fa-eye"></i>
+
+</button>
+
+<button
+class="delete-order">
+
+<i class="fas fa-trash"></i>
+
+</button>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+<!-- ================================= -->
+<!-- FOOD MANAGEMENT -->
+<!-- ================================= -->
+
+<div class="recent-card" style="margin-top:35px;">
+
+<div style="display:flex;justify-content:space-between;align-items:center;">
+
+<h2>
+
+🍽 Food Management
+
+</h2>
+
+<button id="addFoodBtn"
+
+class="btn btn-primary">
+
++ Add Food
+
+</button>
+
+</div>
+
+<br>
+
+<table class="admin-table">
+
+<thead>
+
+<tr>
+
+<th>Image</th>
+
+<th>Name</th>
+
+<th>Category</th>
+
+<th>Price</th>
+
+<th>Rating</th>
+
+<th>Available</th>
+
+<th>Actions</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for food in foods %}
+
+<tr>
+
+<td>
+
+<img src="{{ url_for('static',filename='images/' + food[6]) }}"
+
+style="width:70px;height:70px;border-radius:10px;">
+
+</td>
+
+<td>{{ food[1] }}</td>
+
+<td>{{ food[3] }}</td>
+
+<td>₹ {{ food[4] }}</td>
+
+<td>⭐ {{ food[5] }}</td>
+
+<td>
+
+{% if food[8] %}
+
+<span class="badge ready">
+
+Available
+
+</span>
+
+{% else %}
+
+<span class="badge nonveg">
+
+Unavailable
+
+</span>
+
+{% endif %}
+
+</td>
+
+<td>
+
+<button class="edit-btn">
+
+<i class="fas fa-edit"></i>
+
+</button>
+
+<button class="delete-food">
+
+<i class="fas fa-trash"></i>
+
+</button>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+
+
+<!-- ================================= -->
+<!-- ANALYTICS -->
+<!-- ================================= -->
+
+<div class="dashboard-cards"
+
+style="margin-top:35px;">
+
+<div class="dashboard-card">
+
+<h3>
+
+🥇 Best Seller
+
+</h3>
+
+<br>
+
+<h2>
+
+Chicken Biryani
+
+</h2>
+
+<p>
+
+524 Orders
+
+</p>
+
+</div>
+
+<div class="dashboard-card">
+
+<h3>
+
+⭐ Highest Rated
+
+</h3>
+
+<br>
+
+<h2>
+
+Paneer Butter Masala
+
+</h2>
+
+<p>
+
+4.9 Rating
+
+</p>
+
+</div>
+
+<div class="dashboard-card">
+
+<h3>
+
+🤖 AI Requests
+
+</h3>
+
+<br>
+
+<h2>
+
+1,824
+
+</h2>
+
+<p>
+
+Gemini Queries
+
+</p>
+
+</div>
+
+<div class="dashboard-card">
+
+<h3>
+
+💰 Avg Order
+
+</h3>
+
+<br>
+
+<h2>
+
+₹432
+
+</h2>
+
+<p>
+
+Per Customer
+
+</p>
+
+</div>
+
+</div>
+
+
+
+<!-- ================================= -->
+<!-- GEMINI CHAT HISTORY -->
+<!-- ================================= -->
+
+<div class="recent-card"
+
+style="margin-top:35px;">
+
+<h2>
+
+🤖 Recent AI Conversations
+
+</h2>
+
+<br>
+
+<table class="admin-table">
+
+<thead>
+
+<tr>
+
+<th>User</th>
+
+<th>AI Response</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for chat in chats %}
+
+<tr>
+
+<td>
+
+{{ chat[1] }}
+
+</td>
+
+<td>
+
+{{ chat[2][:120] }}...
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+
+
+<!-- ================================= -->
+<!-- ADD FOOD MODAL -->
+<!-- ================================= -->
+
+<div class="modal"
+
+id="foodModal">
+
+<div class="modal-content">
+
+<h2>
+
+Add Food
+
+</h2>
+
+<br>
+
+<input
+
+class="checkout-input"
+
+placeholder="Food Name">
+
+<input
+
+class="checkout-input"
+
+placeholder="Category">
+
+<input
+
+class="checkout-input"
+
+placeholder="Price">
+
+<input
+
+class="checkout-input"
+
+placeholder="Image Name">
+
+<label>
+
+<input type="checkbox">
+
+Veg
+
+</label>
+
+<br><br>
+
+<button
+
+class="btn btn-primary"
+
+style="width:100%;">
+
+Save Food
+
+</button>
+
+</div>
+
+</div>
+<!-- ================================= -->
+<!-- CHARTS -->
+<!-- ================================= -->
+
+<div class="chart-grid">
+
+<div class="chart-card">
+
+<h2>
+
+📈 Weekly Revenue
+
+</h2>
+
+<canvas id="revenueChart"></canvas>
+
+</div>
+
+<div class="chart-card">
+
+<h2>
+
+🥧 Order Status
+
+</h2>
+
+<canvas id="statusChart"></canvas>
+
+</div>
+
+</div>
+
+
+
+<!-- ================================= -->
+<!-- SETTINGS -->
+<!-- ================================= -->
+
+<div class="recent-card" style="margin-top:35px;">
+
+<h2>
+
+⚙ Restaurant Settings
+
+</h2>
+
+<br>
+
+<div class="settings-grid">
+
+<div>
+
+<label>Restaurant Name</label>
+
+<input
+class="checkout-input"
+value="SmartBite AI">
+
+</div>
+
+<div>
+
+<label>Delivery Charge</label>
+
+<input
+class="checkout-input"
+value="40">
+
+</div>
+
+<div>
+
+<label>GST (%)</label>
+
+<input
+class="checkout-input"
+value="5">
+
+</div>
+
+<div>
+
+<label>Opening Time</label>
+
+<input
+class="checkout-input"
+value="10:00 AM">
+
+</div>
+
+<div>
+
+<label>Closing Time</label>
+
+<input
+class="checkout-input"
+value="11:00 PM">
+
+</div>
+
+<div>
+
+<label>Support Email</label>
+
+<input
+class="checkout-input"
+value="support@smartbite.ai">
+
+</div>
+
+</div>
+
+<br>
+
+<button class="btn btn-primary">
+
+Save Settings
+
+</button>
+
+</div>
+
+
+
+<!-- ================================= -->
+<!-- COUPONS -->
+<!-- ================================= -->
+
+<div class="recent-card" style="margin-top:35px;">
+
+<h2>
+
+🎁 Coupons
+
+</h2>
+
+<br>
+
+<table class="admin-table">
+
+<tr>
+
+<th>Code</th>
+
+<th>Discount</th>
+
+<th>Status</th>
+
+</tr>
+
+<tr>
+
+<td>SMART20</td>
+
+<td>20%</td>
+
+<td>
+
+<span class="badge ready">
+
+Active
+
+</span>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>WELCOME50</td>
+
+<td>₹50 OFF</td>
+
+<td>
+
+<span class="badge">
+
+Expired
+
+</span>
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+
+
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
