@@ -8,6 +8,7 @@ click==8.4.2
 colorama==0.4.6
 cryptography==50.0.0
 distro==1.9.0
+gunicorn==23.0.0
 Flask==3.1.1
 google-ai-generativelanguage==0.6.15
 google-api-core==2.33.0
